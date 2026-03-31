@@ -11,7 +11,7 @@ import type {
 } from "@shared/index";
 import type { Coordinates, SubmitSignalRequest } from "@shared/index";
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL ?? "http://localhost:4000/api";
+const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
 async function unwrap<T>(response: Response): Promise<T> {
   if (!response.ok) {
