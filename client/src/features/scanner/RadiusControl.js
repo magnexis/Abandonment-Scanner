@@ -1,0 +1,4 @@
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+export function RadiusControl({ value, onChange }) {
+    return (_jsxs("div", { className: "rounded-2xl border border-white/5 bg-black/20 px-4 py-4", children: [_jsxs("div", { className: "mb-3 flex items-center justify-between gap-3", children: [_jsx("p", { className: "text-xs uppercase tracking-[0.24em] text-muted", children: "Scan Radius" }), _jsxs("span", { className: "font-mono text-sm text-success", children: [value, "m"] })] }), _jsx("input", { type: "range", min: 100, max: 2000, step: 100, value: value, onChange: (event) => onChange(Number(event.target.value)), className: "h-2 w-full cursor-pointer appearance-none rounded-full bg-white/10 accent-[#2ea44f]" }), _jsxs("div", { className: "mt-2 flex justify-between text-[11px] text-muted", children: [_jsx("span", { children: "100m" }), _jsx("span", { children: "2000m" })] })] }));
+}

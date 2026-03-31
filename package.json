@@ -1,0 +1,26 @@
+{
+  "name": "abandonment-scanner",
+  "private": true,
+  "version": "1.0.0",
+  "workspaces": [
+    "client",
+    "server",
+    "shared"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev --workspace server\" \"npm run dev --workspace client\"",
+    "build": "npm run build --workspace shared && npm run build --workspace server && npm run build --workspace client",
+    "lint": "npm run lint --workspace server && npm run lint --workspace client",
+    "check": "npm run check --workspace server && npm run check --workspace client",
+    "desktop:dev": "npx tauri dev",
+    "desktop:build": "npx tauri build",
+    "desktop:icon": "npx tauri icon client/public/logo.png"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.10.1",
+    "concurrently": "^9.1.2"
+  },
+  "dependencies": {
+    "axios": "^1.14.0"
+  }
+}

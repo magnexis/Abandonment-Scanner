@@ -1,0 +1,43 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Abandonment Scanner",
+  "version": "1.0.0",
+  "identifier": "com.abandonmentscanner.desktop",
+  "build": {
+    "beforeDevCommand": "npm run dev --workspace client",
+    "beforeBuildCommand": "npm run build --workspace client",
+    "devUrl": "http://localhost:5173",
+    "frontendDist": "../client/dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "label": "main",
+        "title": "Abandonment Scanner",
+        "width": 1440,
+        "height": 920,
+        "minWidth": 1100,
+        "minHeight": 720,
+        "resizable": true
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": [
+      "icons/icon.png",
+      "icons/icon.ico"
+    ],
+    "category": "DeveloperTool",
+    "shortDescription": "Geospatial abandonment intelligence dashboard.",
+    "windows": {
+      "wix": {
+        "language": "en-US"
+      }
+    }
+  }
+}
