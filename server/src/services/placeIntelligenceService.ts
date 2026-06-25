@@ -26,6 +26,18 @@ interface RankedCandidate {
 
 const OVERPASS_API_URL = "https://overpass-api.de/api/interpreter";
 
+const isSafeCoordinate = (value: number, name: string): number => {
+  const parsed = parseFloat(String(value));
+  if (!Number.isFinite(parsed)) {
+    throw new Error(`Invalid ${name}: not a finite number`);
+  }
+  const [min, max] = name === "lat" ? [-90, 90] : [-180, 180];
+  if (parsed < min || parsed > max) {
+    throw new Error(`Invalid ${name}: must be between ${min} and ${max}`);
+  }
+  return parsed;
+};
+
 const headers = {
   "Accept-Language": "en-US,en;q=0.9",
   "User-Agent": "AbandonmentScanner/1.0"
@@ -191,24 +203,26 @@ export const enrichLocation = async (
   lng: number,
   location: ResolvedLocation
 ): Promise<PlaceIntelligence & { adjustment: number; active: boolean }> => {
-  const center = { lat, lng };
+  const safeLat = isSafeCoordinate(lat, "lat");
+  const safeLng = isSafeCoordinate(lng, "lng");
+  const center = { lat: safeLat, lng: safeLng };
   const query = `
 [out:json][timeout:8];
 (
-  node(around:120,${lat},${lng})[amenity];
-  way(around:120,${lat},${lng})[amenity];
-  relation(around:120,${lat},${lng})[amenity];
-  node(around:120,${lat},${lng})[shop];
-  way(around:120,${lat},${lng})[shop];
-  relation(around:120,${lat},${lng})[shop];
-  node(around:140,${lat},${lng})[office];
-  way(around:140,${lat},${lng})[office];
-  relation(around:140,${lat},${lng})[office];
-  node(around:180,${lat},${lng})[building];
-  way(around:180,${lat},${lng})[building];
-  relation(around:180,${lat},${lng})[building];
-  way(around:180,${lat},${lng})[landuse];
-  relation(around:180,${lat},${lng})[landuse];
+  node(around:120,${safeLat},${safeLng})[amenity];
+  way(around:120,${safeLat},${safeLng})[amenity];
+  relation(around:120,${safeLat},${safeLng})[amenity];
+  node(around:120,${safeLat},${safeLng})[shop];
+  way(around:120,${safeLat},${safeLng})[shop];
+  relation(around:120,${safeLat},${safeLng})[shop];
+  node(around:140,${safeLat},${safeLng})[office];
+  way(around:140,${safeLat},${safeLng})[office];
+  relation(around:140,${safeLat},${safeLng})[office];
+  node(around:180,${safeLat},${safeLng})[building];
+  way(around:180,${safeLat},${safeLng})[building];
+  relation(around:180,${safeLat},${safeLng})[building];
+  way(around:180,${safeLat},${safeLng})[landuse];
+  relation(around:180,${safeLat},${safeLng})[landuse];
 );
 out center tags qt 30;
 `.trim();
