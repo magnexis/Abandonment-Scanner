@@ -1,6 +1,6 @@
 {
   "name": "abandonment-scanner",
-  "private": true,
+  "private": false,
   "version": "1.0.0",
   "workspaces": [
     "client",
